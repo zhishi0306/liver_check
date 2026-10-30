@@ -1,0 +1,349 @@
+{
+  "drugs": [
+    {
+      "name": "Warfarin",
+      "name_cn": "华法林",
+      "category": "抗凝药",
+      "dosage_normal": "根据INR调整，目标2-3",
+      "child_pugh_a": {
+        "recommendation": "正常剂量，注意监测",
+        "adjustment_needed": false,
+        "note": "起始剂量偏低，密切监测INR"
+      },
+      "child_pugh_b": {
+        "recommendation": "减量25-50%",
+        "adjustment_needed": true,
+        "note": "肝功能损害增强抗凝效果"
+      },
+      "child_pugh_c": {
+        "recommendation": "谨慎使用",
+        "adjustment_needed": true,
+        "note": "严重肝病患者通常避免使用"
+      },
+      "clinical_notes": "肝脏合成凝血因子，肝功能减退可增强华法林效果",
+      "reference": "FDA Label / 临床药理学"
+    },
+    {
+      "name": "Acetaminophen",
+      "name_cn": "对乙酰氨基酚",
+      "category": "镇痛药",
+      "dosage_normal": "4000mg/天",
+      "child_pugh_a": {
+        "recommendation": "4000mg/天",
+        "adjustment_needed": false,
+        "note": "常规剂量安全"
+      },
+      "child_pugh_b": {
+        "recommendation": "2000mg/天",
+        "adjustment_needed": true,
+        "note": "减量50%，每日不超过2000mg"
+      },
+      "child_pugh_c": {
+        "recommendation": "禁用或极低剂量",
+        "adjustment_needed": true,
+        "note": "肝毒性风险显著增加"
+      },
+      "clinical_notes": "过量是急性肝衰竭最常见原因，肝功能不全者风险更高",
+      "reference": "FDA Label / LiverTox"
+    },
+    {
+      "name": "Atorvastatin",
+      "name_cn": "阿托伐他汀",
+      "category": "他汀类",
+      "dosage_normal": "10-80mg/天",
+      "child_pugh_a": {
+        "recommendation": "常规剂量",
+        "adjustment_needed": false,
+        "note": "无需调整"
+      },
+      "child_pugh_b": {
+        "recommendation": "减量50%",
+        "adjustment_needed": true,
+        "note": "血药浓度升高，增加肌肉毒性风险"
+      },
+      "child_pugh_c": {
+        "recommendation": "谨慎使用",
+        "adjustment_needed": true,
+        "note": "避免使用或选择其他降脂药"
+      },
+      "clinical_notes": "经肝代谢，肝功能不全时需减量",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Entecavir",
+      "name_cn": "恩替卡韦",
+      "category": "抗乙肝病毒药",
+      "dosage_normal": "0.5mg/天",
+      "child_pugh_a": {
+        "recommendation": "0.5mg/天",
+        "adjustment_needed": false,
+        "note": "无需调整"
+      },
+      "child_pugh_b": {
+        "recommendation": "0.5mg/天",
+        "adjustment_needed": false,
+        "note": "无需调整，需监测肾功能"
+      },
+      "child_pugh_c": {
+        "recommendation": "0.5mg/天",
+        "adjustment_needed": false,
+        "note": "无需调整，加强监测"
+      },
+      "clinical_notes": "一线抗乙肝药物，安全性好，主要经肾排泄",
+      "reference": "FDA Label / AASLD指南"
+    },
+    {
+      "name": "Tenofovir",
+      "name_cn": "替诺福韦",
+      "category": "抗乙肝病毒药",
+      "dosage_normal": "300mg/天",
+      "child_pugh_a": {
+        "recommendation": "300mg/天",
+        "adjustment_needed": false,
+        "note": "无需调整"
+      },
+      "child_pugh_b": {
+        "recommendation": "300mg/天",
+        "adjustment_needed": false,
+        "note": "无需调整，根据肾功能调整"
+      },
+      "child_pugh_c": {
+        "recommendation": "300mg/天",
+        "adjustment_needed": false,
+        "note": "无需调整，根据肾功能调整"
+      },
+      "clinical_notes": "一线抗乙肝药物，主要经肾排泄，肝功能不影响其代谢",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Sorafenib",
+      "name_cn": "索拉非尼",
+      "category": "酪氨酸激酶抑制剂",
+      "dosage_normal": "400mg bid",
+      "child_pugh_a": {
+        "recommendation": "400mg bid",
+        "adjustment_needed": false,
+        "note": "常规剂量"
+      },
+      "child_pugh_b": {
+        "recommendation": "400mg bid",
+        "adjustment_needed": false,
+        "note": "可维持常规剂量，需监测"
+      },
+      "child_pugh_c": {
+        "recommendation": "禁用",
+        "adjustment_needed": true,
+        "note": "尚无临床数据，避免使用"
+      },
+      "clinical_notes": "经肝代谢，Child-Pugh C级禁用",
+      "reference": "PMC3761410 Table 9"
+    },
+    {
+      "name": "Isoniazid",
+      "name_cn": "异烟肼",
+      "category": "抗结核药",
+      "dosage_normal": "300mg/天",
+      "child_pugh_a": {
+        "recommendation": "300mg/天",
+        "adjustment_needed": false,
+        "note": "常规剂量"
+      },
+      "child_pugh_b": {
+        "recommendation": "减量50%",
+        "adjustment_needed": true,
+        "note": "肝毒性风险增加，需监测肝功能"
+      },
+      "child_pugh_c": {
+        "recommendation": "禁用",
+        "adjustment_needed": true,
+        "note": "避免使用"
+      },
+      "clinical_notes": "肝毒性发生率约1-2%，肝功能不全者风险更高",
+      "reference": "FDA Label / ATS指南"
+    },
+    {
+      "name": "Ketoconazole",
+      "name_cn": "酮康唑",
+      "category": "抗真菌药",
+      "dosage_normal": "200-400mg/天",
+      "child_pugh_a": {
+        "recommendation": "200-400mg/天",
+        "adjustment_needed": false,
+        "note": "常规剂量"
+      },
+      "child_pugh_b": {
+        "recommendation": "减量50%",
+        "adjustment_needed": true,
+        "note": "肝功能损害者慎用"
+      },
+      "child_pugh_c": {
+        "recommendation": "禁用",
+        "adjustment_needed": true,
+        "note": "肝毒性风险高"
+      },
+      "clinical_notes": "已因肝毒性被多国限制使用",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Valproate",
+      "name_cn": "丙戊酸",
+      "category": "抗癫痫药",
+      "dosage_normal": "1000-3000mg/天",
+      "child_pugh_a": {
+        "recommendation": "常规剂量",
+        "adjustment_needed": false,
+        "note": "起始剂量偏低"
+      },
+      "child_pugh_b": {
+        "recommendation": "减量25-50%",
+        "adjustment_needed": true,
+        "note": "血药浓度升高风险"
+      },
+      "child_pugh_c": {
+        "recommendation": "谨慎使用",
+        "adjustment_needed": true,
+        "note": "考虑换用其他抗癫痫药"
+      },
+      "clinical_notes": "肝毒性是严重不良反应，肝功能不全者风险增加",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Propranolol",
+      "name_cn": "普萘洛尔",
+      "category": "β受体阻滞剂",
+      "dosage_normal": "80-160mg bid",
+      "child_pugh_a": {
+        "recommendation": "常规剂量",
+        "adjustment_needed": false,
+        "note": "起始剂量偏低"
+      },
+      "child_pugh_b": {
+        "recommendation": "减量50%",
+        "adjustment_needed": true,
+        "note": "肝功能损害增强药物作用"
+      },
+      "child_pugh_c": {
+        "recommendation": "减量75%或换药",
+        "adjustment_needed": true,
+        "note": "药物蓄积风险高"
+      },
+      "clinical_notes": "广泛经肝代谢，肝功能不全时需显著减量",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Rifampicin",
+      "name_cn": "利福平",
+      "category": "抗结核药",
+      "dosage_normal": "600mg/天",
+      "child_pugh_a": {
+        "recommendation": "600mg/天",
+        "adjustment_needed": false,
+        "note": "常规剂量"
+      },
+      "child_pugh_b": {
+        "recommendation": "减量50%",
+        "adjustment_needed": true,
+        "note": "肝毒性风险增加"
+      },
+      "child_pugh_c": {
+        "recommendation": "禁用",
+        "adjustment_needed": true,
+        "note": "严重肝功能损害者禁用"
+      },
+      "clinical_notes": "肝毒性发生率较高，需监测肝功能",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Imatinib",
+      "name_cn": "伊马替尼",
+      "category": "酪氨酸激酶抑制剂",
+      "dosage_normal": "400mg/天",
+      "child_pugh_a": {
+        "recommendation": "400mg/天",
+        "adjustment_needed": false,
+        "note": "常规剂量"
+      },
+      "child_pugh_b": {
+        "recommendation": "300mg/天",
+        "adjustment_needed": true,
+        "note": "减量25%"
+      },
+      "child_pugh_c": {
+        "recommendation": "200mg/天",
+        "adjustment_needed": true,
+        "note": "减量50%"
+      },
+      "clinical_notes": "经肝代谢，肝功能不全时需减量",
+      "reference": "PMC3761410 Table 8"
+    },
+    {
+      "name": "Ritonavir",
+      "name_cn": "利托那韦",
+      "category": "抗HIV药",
+      "dosage_normal": "100-600mg/天",
+      "child_pugh_a": {
+        "recommendation": "常规剂量",
+        "adjustment_needed": false,
+        "note": "无需调整"
+      },
+      "child_pugh_b": {
+        "recommendation": "减量50%",
+        "adjustment_needed": true,
+        "note": "肝功��损��者慎用"
+      },
+      "child_pugh_c": {
+        "recommendation": "禁用",
+        "adjustment_needed": true,
+        "note": "尚无临床数据，避免使用"
+      },
+      "clinical_notes": "经肝代谢，与多种药物相互作用",
+      "reference": "EACS Guidelines"
+    },
+    {
+      "name": "Remdesivir",
+      "name_cn": "瑞德西韦",
+      "category": "抗新冠药",
+      "dosage_normal": "200mg(第1天),100mg(第2-5天)",
+      "child_pugh_a": {
+        "recommendation": "常规剂量",
+        "adjustment_needed": false,
+        "note": "无需调整"
+      },
+      "child_pugh_b": {
+        "recommendation": "减量50%",
+        "adjustment_needed": true,
+        "note": "轻中度损害需减量"
+      },
+      "child_pugh_c": {
+        "recommendation": "禁用",
+        "adjustment_needed": true,
+        "note": "尚无临床数据"
+      },
+      "clinical_notes": "经肝代谢，肝功能异常者需调整",
+      "reference": "PMC7730337 Table 2"
+    },
+    {
+      "name": "Favipiravir",
+      "name_cn": "法��拉韦",
+      "category": "抗病毒药",
+      "dosage_normal": "1600mg bid(第1天),600mg bid(第2-5天)",
+      "child_pugh_a": {
+        "recommendation": "常规剂量",
+        "adjustment_needed": false,
+        "note": "无需调整"
+      },
+      "child_pugh_b": {
+        "recommendation": "减量50%",
+        "adjustment_needed": true,
+        "note": "肝功能损害者慎用"
+      },
+      "child_pugh_c": {
+        "recommendation": "禁用",
+        "adjustment_needed": true,
+        "note": "严重肝功能损害禁用"
+      },
+      "clinical_notes": "经肝代谢，肝功能不全时需减量",
+      "reference": "PMC7730337 Table 2"
+    }
+  ]
+}

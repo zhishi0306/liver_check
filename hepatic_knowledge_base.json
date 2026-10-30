@@ -1,0 +1,139 @@
+{
+  "drugs": [
+    {
+      "name": "Acetaminophen",
+      "name_zh": "对乙酰氨基酚",
+      "drugbank_id": "DB00316",
+      "hepatotoxicity_rank": "A",
+      "clinical_pattern": "急性肝细胞损伤",
+      "max_daily_dose_normal": 4000,
+      "max_daily_dose_child_pugh_a": 3000,
+      "max_daily_dose_child_pugh_b": 2000,
+      "max_daily_dose_child_pugh_c": "CONTRAINDICATED",
+      "monitoring_required": true,
+      "monitoring_frequency": "PRN_liver_function",
+      "clinical_note": "过量是急性肝衰竭最常见原因"
+    },
+    {
+      "name": "Entecavir",
+      "name_zh": "恩替卡韦",
+      "drugbank_id": "DB08900",
+      "indications": ["chronic_hepatitis_b"],
+      "hepatotoxicity_rank": "B",
+      "dose_adjustment_renal": true,
+      "clinical_note": "一线抗乙肝药物，需监测HBV DNA"
+    },
+    {
+      "name": "Tenofovir",
+      "name_zh": "替诺福韦",
+      "drugbank_id": "DB00399",
+      "indications": ["chronic_hepatitis_b", "hiv"],
+      "hepatotoxicity_rank": "B",
+      "dose_adjustment_renal": true,
+      "clinical_note": "需监测肾功能和骨密度"
+    },
+    {
+      "name": "Silymarin",
+      "name_zh": "水飞蓟素",
+      "drugbank_id": "DB14471",
+      "indications": ["liver_protection", "hepatitis", "cirrhosis"],
+      "hepatotoxicity_rank": "E",
+      "clinical_note": "保肝辅助用药，安全性良好"
+    },
+    {
+      "name": "Ursodeoxycholic Acid",
+      "name_zh": "熊去氧胆酸",
+      "drugbank_id": "DB05952",
+      "indications": ["primary_biliary_cholangitis", "cholestasis"],
+      "hepatotoxicity_rank": "E",
+      "clinical_note": "原发性胆汁性胆管炎一线治疗药物"
+    },
+    {
+      "name": "Isoniazid",
+      "name_zh": "异烟肼",
+      "drugbank_id": "DB00951",
+      "hepatotoxicity_rank": "A",
+      "clinical_pattern": "急性肝细胞损伤",
+      "max_daily_dose_normal": 300,
+      "monitoring_required": true,
+      "clinical_note": "结核治疗一线药物，需定期监测肝功能"
+    },
+    {
+      "name": "Rifampicin",
+      "name_zh": "利福平",
+      "drugbank_id": "DB01098",
+      "hepatotoxicity_rank": "A",
+      "clinical_pattern": "急性肝细胞损伤/胆汁淤积",
+      "monitoring_required": true,
+      "clinical_note": "与异烟肼合用时肝毒性增加"
+    },
+    {
+      "name": "Methotrexate",
+      "name_zh": "甲氨蝶呤",
+      "drugbank_id": "DB00688",
+      "hepatotoxicity_rank": "A",
+      "clinical_pattern": "慢性肝纤维化",
+      "monitoring_required": true,
+      "clinical_note": "长期使用需监测，避免用于严重肝病患者"
+    },
+    {
+      "name": "Valproic Acid",
+      "name_zh": "丙戊酸",
+      "drugbank_id": "DB00320",
+      "hepatotoxicity_rank": "A",
+      "clinical_pattern": "急性肝细胞损伤/胰腺炎",
+      "max_daily_dose_normal": 2000,
+      "monitoring_required": true,
+      "clinical_note": "监测血药浓度，肝功能异常时停药"
+    },
+    {
+      "name": "Tamoxifen",
+      "name_zh": "他莫昔芬",
+      "drugbank_id": "DB00667",
+      "hepatotoxicity_rank": "B",
+      "clinical_pattern": "脂肪肝/肝酶升高",
+      "clinical_note": "定期监测肝功能"
+    },
+    {
+      "name": "Amiodarone",
+      "name_zh": "胺碘酮",
+      "drugbank_id": "DB00674",
+      "hepatotoxicity_rank": "B",
+      "clinical_pattern": "慢性肝细胞损伤/脂肪肝",
+      "clinical_note": "长期监测，肝功能异常时停药"
+    },
+    {
+      "name": "Lamivudine",
+      "name_zh": "拉米夫定",
+      "drugbank_id": "DB00709",
+      "indications": ["chronic_hepatitis_b", "hiv"],
+      "hepatotoxicity_rank": "B",
+      "clinical_note": "需监测"
+    },
+    {
+      "name": "Azathioprine",
+      "name_zh": "硫唑嘌呤",
+      "drugbank_id": "DB00993",
+      "hepatotoxicity_rank": "C",
+      "clinical_pattern": "肝酶升高/胆汁淤积",
+      "monitoring_required": true,
+      "clinical_note": "监测血TPMT活性"
+    },
+    {
+      "name": "Phenytoin",
+      "name_zh": "苯妥英",
+      "drugbank_id": "DB00252",
+      "hepatotoxicity_rank": "A",
+      "clinical_pattern": "急性肝细胞损伤",
+      "monitoring_required": true,
+      "clinical_note": "监测血药浓度"
+    },
+    {
+      "name": "Bicyclol",
+      "name_zh": "双环醇",
+      "indications": ["liver_protection", "reduce_alt"],
+      "hepatotoxicity_rank": "E",
+      "clinical_note": "国产保肝药"
+    }
+  ]
+}

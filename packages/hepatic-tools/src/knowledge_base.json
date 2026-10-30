@@ -1,0 +1,349 @@
+{
+  "drugs": [
+    {
+      "name": "Warfarin",
+      "name_cn": "Warfarin",
+      "category": "anticoagulant",
+      "dosage_normal": "According to INR, target 2-3",
+      "child_pugh_a": {
+        "recommendation": "Normal dose, monitor closely",
+        "adjustment_needed": false,
+        "note": "Start with low dose, monitor INR"
+      },
+      "child_pugh_b": {
+        "recommendation": "Reduce 25-50%",
+        "adjustment_needed": true,
+        "note": "Liver dysfunction enhances anticoagulant effect"
+      },
+      "child_pugh_c": {
+        "recommendation": "Use with caution",
+        "adjustment_needed": true,
+        "note": "Avoid in severe liver disease"
+      },
+      "clinical_notes": "Liver synthesizes clotting factors, liver dysfunction can enhance warfarin effect",
+      "reference": "FDA Label / Clinical Pharmacology"
+    },
+    {
+      "name": "Acetaminophen",
+      "name_cn": "Acetaminophen",
+      "category": "analgesic",
+      "dosage_normal": "4000mg/day",
+      "child_pugh_a": {
+        "recommendation": "4000mg/day",
+        "adjustment_needed": false,
+        "note": "Normal dose safe"
+      },
+      "child_pugh_b": {
+        "recommendation": "2000mg/day",
+        "adjustment_needed": true,
+        "note": "Reduce 50%, max 2000mg/day"
+      },
+      "child_pugh_c": {
+        "recommendation": "Contraindicated or very low dose",
+        "adjustment_needed": true,
+        "note": "High hepatotoxicity risk"
+      },
+      "clinical_notes": "Overdose is most common cause of acute liver failure",
+      "reference": "FDA Label / LiverTox"
+    },
+    {
+      "name": "Atorvastatin",
+      "name_cn": "Atorvastatin",
+      "category": "statin",
+      "dosage_normal": "10-80mg/day",
+      "child_pugh_a": {
+        "recommendation": "Normal dose",
+        "adjustment_needed": false,
+        "note": "No adjustment needed"
+      },
+      "child_pugh_b": {
+        "recommendation": "Reduce 50%",
+        "adjustment_needed": true,
+        "note": "Increased blood concentration, muscle toxicity risk"
+      },
+      "child_pugh_c": {
+        "recommendation": "Use with caution",
+        "adjustment_needed": true,
+        "note": "Avoid or choose other lipid-lowering drugs"
+      },
+      "clinical_notes": "Metabolized by liver, dose adjustment needed in liver dysfunction",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Entecavir",
+      "name_cn": "Entecavir",
+      "category": "antiviral_hbv",
+      "dosage_normal": "0.5mg/day",
+      "child_pugh_a": {
+        "recommendation": "0.5mg/day",
+        "adjustment_needed": false,
+        "note": "No adjustment needed"
+      },
+      "child_pugh_b": {
+        "recommendation": "0.5mg/day",
+        "adjustment_needed": false,
+        "note": "No adjustment, monitor renal function"
+      },
+      "child_pugh_c": {
+        "recommendation": "0.5mg/day",
+        "adjustment_needed": false,
+        "note": "No adjustment, monitor closely"
+      },
+      "clinical_notes": "First-line anti-HBV, good safety, mainly renally excreted",
+      "reference": "FDA Label / AASLD Guidelines"
+    },
+    {
+      "name": "Tenofovir",
+      "name_cn": "Tenofovir",
+      "category": "antiviral_hbv",
+      "dosage_normal": "300mg/day",
+      "child_pugh_a": {
+        "recommendation": "300mg/day",
+        "adjustment_needed": false,
+        "note": "No adjustment needed"
+      },
+      "child_pugh_b": {
+        "recommendation": "300mg/day",
+        "adjustment_needed": false,
+        "note": "No adjustment, adjust by renal function"
+      },
+      "child_pugh_c": {
+        "recommendation": "300mg/day",
+        "adjustment_needed": false,
+        "note": "No adjustment, adjust by renal function"
+      },
+      "clinical_notes": "First-line anti-HBV, mainly renally excreted, liver function does not affect metabolism",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Sorafenib",
+      "name_cn": "Sorafenib",
+      "category": "kinase_inhibitor",
+      "dosage_normal": "400mg bid",
+      "child_pugh_a": {
+        "recommendation": "400mg bid",
+        "adjustment_needed": false,
+        "note": "Normal dose"
+      },
+      "child_pugh_b": {
+        "recommendation": "400mg bid",
+        "adjustment_needed": false,
+        "note": "Maintain normal dose, monitor closely"
+      },
+      "child_pugh_c": {
+        "recommendation": "Contraindicated",
+        "adjustment_needed": true,
+        "note": "No clinical data, avoid use"
+      },
+      "clinical_notes": "Metabolized by liver, contraindicated in Child-Pugh C",
+      "reference": "PMC3761410 Table 9"
+    },
+    {
+      "name": "Isoniazid",
+      "name_cn": "Isoniazid",
+      "category": "antituberculosis",
+      "dosage_normal": "300mg/day",
+      "child_pugh_a": {
+        "recommendation": "300mg/day",
+        "adjustment_needed": false,
+        "note": "Normal dose"
+      },
+      "child_pugh_b": {
+        "recommendation": "Reduce 50%",
+        "adjustment_needed": true,
+        "note": "Increased hepatotoxicity risk, monitor liver function"
+      },
+      "child_pugh_c": {
+        "recommendation": "Contraindicated",
+        "adjustment_needed": true,
+        "note": "Avoid use"
+      },
+      "clinical_notes": "Hepatotoxicity rate 1-2%, higher risk in liver dysfunction",
+      "reference": "FDA Label / ATS Guidelines"
+    },
+    {
+      "name": "Ketoconazole",
+      "name_cn": "Ketoconazole",
+      "category": "antifungal",
+      "dosage_normal": "200-400mg/day",
+      "child_pugh_a": {
+        "recommendation": "200-400mg/day",
+        "adjustment_needed": false,
+        "note": "Normal dose"
+      },
+      "child_pugh_b": {
+        "recommendation": "Reduce 50%",
+        "adjustment_needed": true,
+        "note": "Use with caution in liver dysfunction"
+      },
+      "child_pugh_c": {
+        "recommendation": "Contraindicated",
+        "adjustment_needed": true,
+        "note": "High hepatotoxicity risk"
+      },
+      "clinical_notes": "Restricted in many countries due to hepatotoxicity",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Valproate",
+      "name_cn": "Valproate",
+      "category": "antiepileptic",
+      "dosage_normal": "1000-3000mg/day",
+      "child_pugh_a": {
+        "recommendation": "Normal dose",
+        "adjustment_needed": false,
+        "note": "Start with low dose"
+      },
+      "child_pugh_b": {
+        "recommendation": "Reduce 25-50%",
+        "adjustment_needed": true,
+        "note": "Increased blood concentration risk"
+      },
+      "child_pugh_c": {
+        "recommendation": "Use with caution",
+        "adjustment_needed": true,
+        "note": "Consider alternative antiepileptic"
+      },
+      "clinical_notes": "Hepatotoxicity is serious adverse reaction, higher risk in liver dysfunction",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Propranolol",
+      "name_cn": "Propranolol",
+      "category": "beta_blocker",
+      "dosage_normal": "80-160mg bid",
+      "child_pugh_a": {
+        "recommendation": "Normal dose",
+        "adjustment_needed": false,
+        "note": "Start with low dose"
+      },
+      "child_pugh_b": {
+        "recommendation": "Reduce 50%",
+        "adjustment_needed": true,
+        "note": "Liver dysfunction enhances drug effect"
+      },
+      "child_pugh_c": {
+        "recommendation": "Reduce 75% or switch",
+        "adjustment_needed": true,
+        "note": "High drug accumulation risk"
+      },
+      "clinical_notes": "Extensively metabolized by liver, significant dose reduction needed in liver dysfunction",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Rifampicin",
+      "name_cn": "Rifampicin",
+      "category": "antituberculosis",
+      "dosage_normal": "600mg/day",
+      "child_pugh_a": {
+        "recommendation": "600mg/day",
+        "adjustment_needed": false,
+        "note": "Normal dose"
+      },
+      "child_pugh_b": {
+        "recommendation": "Reduce 50%",
+        "adjustment_needed": true,
+        "note": "Increased hepatotoxicity risk"
+      },
+      "child_pugh_c": {
+        "recommendation": "Contraindicated",
+        "adjustment_needed": true,
+        "note": "Avoid in severe liver dysfunction"
+      },
+      "clinical_notes": "High hepatotoxicity rate, monitor liver function",
+      "reference": "FDA Label"
+    },
+    {
+      "name": "Imatinib",
+      "name_cn": "Imatinib",
+      "category": "kinase_inhibitor",
+      "dosage_normal": "400mg/day",
+      "child_pugh_a": {
+        "recommendation": "400mg/day",
+        "adjustment_needed": false,
+        "note": "Normal dose"
+      },
+      "child_pugh_b": {
+        "recommendation": "300mg/day",
+        "adjustment_needed": true,
+        "note": "Reduce 25%"
+      },
+      "child_pugh_c": {
+        "recommendation": "200mg/day",
+        "adjustment_needed": true,
+        "note": "Reduce 50%"
+      },
+      "clinical_notes": "Metabolized by liver, dose adjustment needed in liver dysfunction",
+      "reference": "PMC3761410 Table 8"
+    },
+    {
+      "name": "Ritonavir",
+      "name_cn": "Ritonavir",
+      "category": "antiviral_hiv",
+      "dosage_normal": "100-600mg/day",
+      "child_pugh_a": {
+        "recommendation": "Normal dose",
+        "adjustment_needed": false,
+        "note": "No adjustment needed"
+      },
+      "child_pugh_b": {
+        "recommendation": "Reduce 50%",
+        "adjustment_needed": true,
+        "note": "Use with caution in liver dysfunction"
+      },
+      "child_pugh_c": {
+        "recommendation": "Contraindicated",
+        "adjustment_needed": true,
+        "note": "No clinical data, avoid use"
+      },
+      "clinical_notes": "Metabolized by liver, multiple drug interactions",
+      "reference": "EACS Guidelines"
+    },
+    {
+      "name": "Remdesivir",
+      "name_cn": "Remdesivir",
+      "category": "antiviral_covid",
+      "dosage_normal": "200mg(day1), 100mg(day2-5)",
+      "child_pugh_a": {
+        "recommendation": "Normal dose",
+        "adjustment_needed": false,
+        "note": "No adjustment needed"
+      },
+      "child_pugh_b": {
+        "recommendation": "Reduce 50%",
+        "adjustment_needed": true,
+        "note": "Dose reduction for mild-moderate impairment"
+      },
+      "child_pugh_c": {
+        "recommendation": "Contraindicated",
+        "adjustment_needed": true,
+        "note": "No clinical data"
+      },
+      "clinical_notes": "Metabolized by liver, dose adjustment needed for liver dysfunction",
+      "reference": "PMC7730337 Table 2"
+    },
+    {
+      "name": "Favipiravir",
+      "name_cn": "Favipiravir",
+      "category": "antiviral",
+      "dosage_normal": "1600mg bid(day1), 600mg bid(day2-5)",
+      "child_pugh_a": {
+        "recommendation": "Normal dose",
+        "adjustment_needed": false,
+        "note": "No adjustment needed"
+      },
+      "child_pugh_b": {
+        "recommendation": "Reduce 50%",
+        "adjustment_needed": true,
+        "note": "Use with caution in liver dysfunction"
+      },
+      "child_pugh_c": {
+        "recommendation": "Contraindicated",
+        "adjustment_needed": true,
+        "note": "Avoid in severe liver dysfunction"
+      },
+      "clinical_notes": "Metabolized by liver, dose adjustment needed in liver dysfunction",
+      "reference": "PMC7730337 Table 2"
+    }
+  ]
+}

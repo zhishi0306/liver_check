@@ -1,0 +1,306 @@
+{
+  "test_cases": [
+    {
+      "id": "DDI-001",
+      "description": "华法林与复方新诺明合用",
+      "input": {
+        "current_drugs": ["Warfarin", "Aspirin"],
+        "new_drug": "Sulfamethoxazole/Trimethoprim",
+        "patient": {
+          "age": 72,
+          "eGFR": 45,
+          "child_pugh": "A"
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severity": "major",
+        "suggests_alternatives": true,
+        "clinical_advice": "avoid_combination"
+      }
+    },
+    {
+      "id": "DDI-002",
+      "description": "氯吡格雷与奥美拉唑合用",
+      "input": {
+        "current_drugs": ["Clopidogrel"],
+        "new_drug": "Omeprazole",
+        "patient": {
+          "age": 65,
+          "eGFR": 60
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severity": "moderate",
+        "clinical_advice": "consider_pantoprazole"
+      }
+    },
+    {
+      "id": "DDI-003",
+      "description": "华法林与阿司匹林合用",
+      "input": {
+        "current_drugs": ["Warfarin"],
+        "new_drug": "Aspirin",
+        "patient": {
+          "age": 70,
+          "eGFR": 50
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severity": "moderate",
+        "monitor": "INR"
+      }
+    },
+    {
+      "id": "DDI-004",
+      "description": "二甲双胍与造影剂合用（肾功能不全）",
+      "input": {
+        "current_drugs": ["Metformin"],
+        "new_drug": "Contrast Agent",
+        "patient": {
+          "age": 65,
+          "eGFR": 45
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severity": "moderate"
+      }
+    },
+    {
+      "id": "DDI-005",
+      "description": "辛伐他汀与红霉素合用",
+      "input": {
+        "current_drugs": ["Simvastatin"],
+        "new_drug": "Erythromycin",
+        "patient": {
+          "age": 50,
+          "eGFR": 80
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severity": "major"
+      }
+    },
+    {
+      "id": "DDI-006",
+      "description": "地高辛与胺碘酮合用",
+      "input": {
+        "current_drugs": ["Digoxin"],
+        "new_drug": "Amiodarone",
+        "patient": {
+          "age": 68,
+          "eGFR": 55
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severity": "major"
+      }
+    },
+    {
+      "id": "FILTER-001",
+      "description": "老年患者（>75岁）使用抗凝药",
+      "input": {
+        "current_drugs": ["Warfarin"],
+        "patient": {
+          "age": 80,
+          "eGFR": 25,
+          "child_pugh": "A"
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severity": "contraindicated"
+      }
+    },
+    {
+      "id": "FILTER-002",
+      "description": "严重肾功能不全（eGFR<30）使用二甲双胍",
+      "input": {
+        "current_drugs": ["Metformin"],
+        "patient": {
+          "age": 60,
+          "eGFR": 20
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severity": "contraindicated"
+      }
+    },
+    {
+      "id": "FILTER-003",
+      "description": "Child-Pugh C级肝功能不全使用经肝代谢药物",
+      "input": {
+        "current_drugs": ["Atorvastatin"],
+        "patient": {
+          "age": 55,
+          "eGFR": 90,
+          "child_pugh": "C"
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severity": "contraindicated"
+      }
+    },
+    {
+      "id": "FILTER-004",
+      "description": "孕妇使用禁用药物",
+      "input": {
+        "current_drugs": ["Warfarin"],
+        "patient": {
+          "age": 28,
+          "eGFR": 90,
+          "pregnancy": true
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severity": "contraindicated"
+      }
+    },
+    {
+      "id": "SAFE-001",
+      "description": "无相互作用的常见药物组合-降压药",
+      "input": {
+        "current_drugs": ["Lisinopril", "Amlodipine"],
+        "new_drug": "Metformin",
+        "patient": {
+          "age": 55,
+          "eGFR": 80
+        }
+      },
+      "expected": {
+        "detects_interaction": false
+      }
+    },
+    {
+      "id": "SAFE-002",
+      "description": "无相互作用的常见药物组合-他汀类",
+      "input": {
+        "current_drugs": ["Atorvastatin"],
+        "new_drug": "Lisinopril",
+        "patient": {
+          "age": 60,
+          "eGFR": 70
+        }
+      },
+      "expected": {
+        "detects_interaction": false
+      }
+    },
+    {
+      "id": "SAFE-003",
+      "description": "安全的降糖药组合",
+      "input": {
+        "current_drugs": ["Metformin"],
+        "new_drug": "Amlodipine",
+        "patient": {
+          "age": 58,
+          "eGFR": 75
+        }
+      },
+      "expected": {
+        "detects_interaction": false
+      }
+    },
+    {
+      "id": "ALT-001",
+      "description": "华法林替代品查询",
+      "input": {
+        "current_drugs": [],
+        "new_drug": "Warfarin",
+        "patient": {}
+      },
+      "expected": {
+        "suggests_alternatives": true,
+        "alternative_categories": ["Direct Factor Xa Inhibitor", "Direct Thrombin Inhibitor"]
+      }
+    },
+    {
+      "id": "ALT-002",
+      "description": "奥美拉唑替代品查询",
+      "input": {
+        "current_drugs": [],
+        "new_drug": "Omeprazole",
+        "patient": {}
+      },
+      "expected": {
+        "suggests_alternatives": true,
+        "alternative_categories": ["PPI"]
+      }
+    },
+    {
+      "id": "ALT-003",
+      "description": "氯吡格雷替代品查询",
+      "input": {
+        "current_drugs": [],
+        "new_drug": "Clopidogrel",
+        "patient": {}
+      },
+      "expected": {
+        "suggests_alternatives": true
+      }
+    },
+    {
+      "id": "CASE-001",
+      "description": "复杂病例：多种药物相互作用",
+      "input": {
+        "current_drugs": ["Warfarin", "Aspirin", "Lisinopril"],
+        "new_drug": "Ibuprofen",
+        "patient": {
+          "age": 72,
+          "eGFR": 40
+        }
+      },
+      "expected": {
+        "detects_interaction": true,
+        "severities": ["moderate", "major"]
+      }
+    },
+    {
+      "id": "CASE-002",
+      "description": "复杂病例：老年多药患者",
+      "input": {
+        "current_drugs": ["Metformin", "Amlodipine", "Atorvastatin", "Omeprazole"],
+        "new_drug": "Clarithromycin",
+        "patient": {
+          "age": 78,
+          "eGFR": 35
+        }
+      },
+      "expected": {
+        "detects_interaction": true
+      }
+    },
+    {
+      "id": "ACC-001",
+      "description": "药物别名识别：Warfarin别名",
+      "input": {
+        "current_drugs": ["Coumadin"],
+        "patient": {}
+      },
+      "expected": {
+        "recognizes_alias": true,
+        "standard_name": "Warfarin"
+      }
+    },
+    {
+      "id": "ACC-002",
+      "description": "药物别名识别：复方新诺明别名",
+      "input": {
+        "current_drugs": ["Bactrim"],
+        "patient": {}
+      },
+      "expected": {
+        "recognizes_alias": true,
+        "standard_name": "Sulfamethoxazole/Trimethoprim"
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "data_source": {
+    "type": "local_knowledge_base",
+    "path": "./packages/hepatic-tools/src/knowledge_base.json",
+    "drug_count": 15,
+    "last_updated": "2024-06-06"
+  },
+  "data_expansion_plan": {
+    "phase_1": "批量解析FDA官网PDF",
+    "phase_2": "集成LiverTox API",
+    "phase_3": "构建500+药物完整知识库"
+  },
+  "report": {
+    "always_include_disclaimer": true,
+    "disclaimer_text": "建议仅供参考，最终用药决策需由临床医生根据患者具体情况确定"
+  }
+}

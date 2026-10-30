@@ -1,0 +1,189 @@
+{
+  "test_cases": [
+    {
+      "id": "HEP-001",
+      "description": "肝硬化患者使用对乙酰氨基酚",
+      "input": {
+        "drug": "Acetaminophen",
+        "drug_zh": "对乙酰氨基酚",
+        "child_pugh_score": 8,
+        "normal_dose": 4000
+      },
+      "expected": {
+        "hepatotoxicity_rank": "A",
+        "dose_adjustment_required": true,
+        "adjusted_dose": 2000,
+        "clinical_advice_contains": ["减量", "监测"]
+      }
+    },
+    {
+      "id": "HEP-002",
+      "description": "慢性乙肝患者使用恩替卡韦",
+      "input": {
+        "drug": "Entecavir",
+        "child_pugh_score": 5
+      },
+      "expected": {
+        "hepatotoxicity_rank": "B",
+        "indicated": true,
+        "dose_adjustment_required": false
+      }
+    },
+    {
+      "id": "HEP-003",
+      "description": "Child-Pugh C级患者使用利福平",
+      "input": {
+        "drug": "Rifampicin",
+        "child_pugh_score": 12
+      },
+      "expected": {
+        "hepatotoxicity_rank": "A",
+        "contraindicated": true,
+        "recommendation_contains": ["禁用", "避免"]
+      }
+    },
+    {
+      "id": "HEP-004",
+      "description": "Child-Pugh B级患者使用甲氨蝶呤",
+      "input": {
+        "drug": "Methotrexate",
+        "child_pugh_score": 8
+      },
+      "expected": {
+        "hepatotoxicity_rank": "A",
+        "dose_adjustment_required": true,
+        "recommendation_contains": ["减量"]
+      }
+    },
+    {
+      "id": "HEP-005",
+      "description": "水飞蓟素安全性评估",
+      "input": {
+        "drug": "Silymarin"
+      },
+      "expected": {
+        "hepatotoxicity_rank": "E",
+        "safe_for_all_grades": true
+      }
+    },
+    {
+      "id": "HEP-006",
+      "description": "Child-Pugh评分计算-轻度",
+      "input": {
+        "bilirubin": 25,
+        "albumin": 40,
+        "pt_seconds": 2
+      },
+      "expected": {
+        "child_pugh_grade": "A"
+      }
+    },
+    {
+      "id": "HEP-007",
+      "description": "Child-Pugh评分计算-中度",
+      "input": {
+        "bilirubin": 40,
+        "albumin": 30,
+        "pt_seconds": 5
+      },
+      "expected": {
+        "child_pugh_grade": "B"
+      }
+    },
+    {
+      "id": "HEP-008",
+      "description": "Child-Pugh评分计算-重度",
+      "input": {
+        "bilirubin": 60,
+        "albumin": 25,
+        "pt_seconds": 10
+      },
+      "expected": {
+        "child_pugh_grade": "C"
+      }
+    },
+    {
+      "id": "HEP-009",
+      "description": "药物筛选-肝毒性药物",
+      "input": {
+        "drug_list": ["Acetaminophen", "Aspirin", "Isoniazid"]
+      },
+      "expected": {
+        "hepatic_related_count": 2,
+        "high_risk_drugs": ["Acetaminophen", "Isoniazid"]
+      }
+    },
+    {
+      "id": "HEP-010",
+      "description": "药物筛选-保肝药",
+      "input": {
+        "drug_list": ["Silymarin", "Metformin", "Ursodeoxycholic Acid"]
+      },
+      "expected": {
+        "hepatic_related_count": 2,
+        "liver_drugs": ["Silymarin", "Ursodeoxycholic Acid"]
+      }
+    },
+    {
+      "id": "HEP-011",
+      "description": "抗乙肝药物推荐",
+      "input": {
+        "indication": "chronic_hepatitis_b"
+      },
+      "expected": {
+        "recommended_drugs": ["Entecavir", "Tenofovir"]
+      }
+    },
+    {
+      "id": "HEP-012",
+      "description": "Child-Pugh C级禁用A级肝毒药",
+      "input": {
+        "drug": "Valproic Acid",
+        "child_pugh_score": 11
+      },
+      "expected": {
+        "contraindicated": true,
+        "grade": "C"
+      }
+    },
+    {
+      "id": "HEP-013",
+      "description": "剂量调整-A级患者正常剂量",
+      "input": {
+        "drug": "Acetaminophen",
+        "child_pugh_score": 5,
+        "normal_dose": 4000
+      },
+      "expected": {
+        "adjusted_dose": 4000,
+        "grade": "A"
+      }
+    },
+    {
+      "id": "HEP-014",
+      "description": "剂量调整-B级患者减量50%",
+      "input": {
+        "drug": "Acetaminophen",
+        "child_pugh_score": 8,
+        "normal_dose": 4000
+      },
+      "expected": {
+        "adjusted_dose": 2000,
+        "grade": "B"
+      }
+    },
+    {
+      "id": "HEP-015",
+      "description": "剂量调整-C级患者禁用",
+      "input": {
+        "drug": "Acetaminophen",
+        "child_pugh_score": 12,
+        "normal_dose": 4000
+      },
+      "expected": {
+        "adjusted_dose": "CONTRAINDICATED",
+        "grade": "C"
+      }
+    }
+  ]
+}

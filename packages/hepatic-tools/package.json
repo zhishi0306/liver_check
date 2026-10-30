@@ -1,0 +1,21 @@
+{
+  "name": "@pi-med/hepatic-tools",
+  "version": "0.1.0",
+  "description": "Hepatic drug decision support tools - LiverTox based hepatotoxicity checking",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest --run"
+  },
+  "dependencies": {
+    "@earendil-works/pi-agent-core": "^0.76.0",
+    "typebox": "1.1.38"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

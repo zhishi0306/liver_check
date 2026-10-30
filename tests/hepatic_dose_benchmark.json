@@ -1,0 +1,73 @@
+{
+  "test_cases": [
+    {
+      "id": 1,
+      "description": "华法林+Child-Pugh B级查询",
+      "input": {
+        "drug_name": "Warfarin",
+        "child_pugh_grade": "B"
+      },
+      "expected": {
+        "found": true,
+        "adjustment_needed": true,
+        "recommended_dosage_contains": "减量"
+      }
+    },
+    {
+      "id": 2,
+      "description": "索拉非尼+Child-Pugh C级查询",
+      "input": {
+        "drug_name": "Sorafenib",
+        "child_pugh_grade": "C"
+      },
+      "expected": {
+        "found": true,
+        "adjustment_needed": true,
+        "recommended_dosage_contains": "禁用"
+      }
+    },
+    {
+      "id": 3,
+      "description": "恩替卡韦+Child-Pugh A级查询",
+      "input": {
+        "drug_name": "Entecavir",
+        "child_pugh_grade": "A"
+      },
+      "expected": {
+        "found": true,
+        "adjustment_needed": false,
+        "recommended_dosage_contains": "0.5mg"
+      }
+    },
+    {
+      "id": 4,
+      "description": "对乙酰氨基酚+Child-Pugh B级查询",
+      "input": {
+        "drug_name": "Acetaminophen",
+        "child_pugh_grade": "B"
+      },
+      "expected": {
+        "found": true,
+        "adjustment_needed": true,
+        "recommended_dosage_contains": "2000mg"
+      }
+    },
+    {
+      "id": 5,
+      "description": "查询未知药物",
+      "input": {
+        "drug_name": "Aspirin",
+        "child_pugh_grade": "B"
+      },
+      "expected": {
+        "found": false,
+        "message_contains": "未找到"
+      }
+    }
+  ],
+  "validation": {
+    "check_disclaimer": true,
+    "check_category_coverage": true,
+    "check_drug_count": 15
+  }
+}

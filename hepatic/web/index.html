@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>肝病用药剂量调整系统</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+      background: linear-gradient(135deg, #e8f4fc 0%, #d4e9f7 50%, #bddbf0 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #1565c0;
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 28px;
+    }
+    
+    .subtitle {
+      color: #666;
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    
+    .section-title {
+      color: #1976d2;
+      font-size: 18px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e3f2fd;
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .form-group {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #444;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      background: #fafafa;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: #2196f3;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    }
+    
+    .btn {
+      background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 600;
+      transition: transform 0.1s, box-shadow 0.2s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .result {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      display: none;
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+    }
+    
+    .result.show {
+      display: block;
+    }
+    
+    .result.success {
+      border-left: 4px solid #4caf50;
+      background: #f9fbf9;
+    }
+    
+    .result.error {
+      border-left: 4px solid #f44336;
+      background: #fdf9f9;
+    }
+    
+    .result.warning {
+      border-left: 4px solid #ff9800;
+      background: #fffbf0;
+    }
+    
+    .examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    
+    .example-btn {
+      background: #e3f2fd;
+      color: #1976d2;
+      border: 1px solid #bbdefb;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .example-btn:hover {
+      background: #bbdefb;
+    }
+    
+    .info {
+      color: #888;
+      font-size: 13px;
+      margin-top: 16px;
+      text-align: center;
+    }
+    
+    .info strong {
+      color: #d32f2f;
+    }
+    
+    .drug-list {
+      margin-top: 16px;
+      padding: 12px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #666;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    
+    .drug-list-item {
+      display: inline-block;
+      margin: 4px;
+      padding: 4px 8px;
+      background: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .drug-list-item:hover {
+      background: #e3f2fd;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        flex-direction: column;
+      }
+      
+      .form-group {
+        min-width: 100%;
+      }
+      
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧬 肝病用药剂量调整系统</h1>
+    <p class="subtitle">基于Child-Pugh分级的剂量调整建议</p>
+    
+    <div class="card">
+      <div class="section-title">💊 查询剂量调整</div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>药物名称（中英文均可）</label>
+          <input type="text" id="drugName" placeholder="例如：Warfarin、华法林、Acetaminophen">
+        </div>
+        
+        <div class="form-group">
+          <label>Child-Pugh分级</label>
+          <select id="childPughGrade">
+            <option value="">-- 请选择 --</option>
+            <option value="A">A级（轻度损害，5-6分）</option>
+            <option value="B">B级（中度损害，7-9分）</option>
+            <option value="C">C级（重度损害，10-15分）</option>
+          </select>
+        </div>
+      </div>
+      
+      <button class="btn" onclick="queryDosage()">查询剂量建议</button>
+      
+      <div id="result" class="result"></div>
+      
+      <div class="examples">
+        <span style="color:#666;font-size:13px;margin-right:8px;">快速示例：</span>
+        <button class="example-btn" onclick="fillExample('Warfarin', 'B')">华法林+B级</button>
+        <button class="example-btn" onclick="fillExample('Acetaminophen', 'B')">对乙酰氨基酚+B级</button>
+        <button class="example-btn" onclick="fillExample('Sorafenib', 'C')">索拉非尼+C级</button>
+        <button class="example-btn" onclick="fillExample('Entecavir', 'A')">恩替卡韦+A级</button>
+        <button class="example-btn" onclick="fillExample('Atorvastatin', 'C')">阿托伐他汀+C级</button>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="section-title">📋 可用药物列表</div>
+      <div class="drug-list" id="drugList">
+        <span class="drug-list-item" onclick="fillExample('Warfarin', 'A')">华法林</span>
+        <span class="drug-list-item" onclick="fillExample('Acetaminophen', 'A')">对乙酰氨基酚</span>
+        <span class="drug-list-item" onclick="fillExample('Atorvastatin', 'A')">阿托伐他汀</span>
+        <span class="drug-list-item" onclick="fillExample('Entecavir', 'A')">恩替卡韦</span>
+        <span class="drug-list-item" onclick="fillExample('Tenofovir', 'A')">替诺福韦</span>
+        <span class="drug-list-item" onclick="fillExample('Sorafenib', 'A')">索拉非尼</span>
+        <span class="drug-list-item" onclick="fillExample('Isoniazid', 'A')">异烟肼</span>
+        <span class="drug-list-item" onclick="fillExample('Ketoconazole', 'A')">酮康唑</span>
+        <span class="drug-list-item" onclick="fillExample('Valproate', 'A')">丙戊酸</span>
+        <span class="drug-list-item" onclick="fillExample('Propranolol', 'A')">普萘洛尔</span>
+        <span class="drug-list-item" onclick="fillExample('Rifampicin', 'A')">利福平</span>
+        <span class="drug-list-item" onclick="fillExample('Imatinib', 'A')">伊马替尼</span>
+        <span class="drug-list-item" onclick="fillExample('Ritonavir', 'A')">利托那韦</span>
+        <span class="drug-list-item" onclick="fillExample('Remdesivir', 'A')">瑞德西韦</span>
+        <span class="drug-list-item" onclick="fillExample('Favipiravir', 'A')">法匹拉韦</span>
+      </div>
+    </div>
+    
+    <p class="info">
+      <strong>免责声明：</strong>本系统数据仅供参考，具体用药决策请遵医嘱
+    </p>
+  </div>
+
+  <script>
+    // 知识库
+    let DRUG_DB = {};
+    
+    // 加载知识库
+    async function loadKnowledgeBase() {
+      try {
+        const response = await fetch('knowledge_base_cn.json');
+        const data = await response.json();
+        
+        // 转换为以英文名为key的对象
+        data.drugs.forEach(drug => {
+          DRUG_DB[drug.name.toLowerCase()] = drug;
+          // 同时添加中文名作为key
+          DRUG_DB[drug.name_cn] = drug;
+        });
+        
+        console.log('Loaded', data.drugs.length, 'drugs');
+      } catch (e) {
+        console.error('Failed to load knowledge base:', e);
+      }
+    }
+    
+    // 页面加载时加载知识库
+    loadKnowledgeBase();
+
+    // 查找药物（支持中英文）
+    function findDrug(name) {
+      const lower = name.toLowerCase().trim();
+      
+      // 精确匹配
+      if (DRUG_DB[lower]) return DRUG_DB[lower];
+      if (DRUG_DB[name]) return DRUG_DB[name];
+      
+      // 模糊匹配
+      for (const [key, drug] of Object.entries(DRUG_DB)) {
+        if (drug.name && drug.name.toLowerCase().includes(lower) && lower.length > 2) {
+          return drug;
+        }
+        if (drug.name_cn && drug.name_cn.includes(name) && name.length > 1) {
+          return drug;
+        }
+      }
+      return null;
+    }
+
+    // 填充示例
+    function fillExample(drugName, grade) {
+      document.getElementById('drugName').value = drugName;
+      document.getElementById('childPughGrade').value = grade;
+    }
+
+    // 显示结果
+    function showResult(msg, type) {
+      const el = document.getElementById('result');
+      el.textContent = msg;
+      el.className = 'result show ' + type;
+    }
+
+    // 查询剂量
+    function queryDosage() {
+      const drugName = document.getElementById('drugName').value.trim();
+      const grade = document.getElementById('childPughGrade').value;
+      
+      if (!drugName) {
+        showResult('请输入药物名称', 'error');
+        return;
+      }
+      
+      if (!grade) {
+        showResult('请选择Child-Pugh分级', 'error');
+        return;
+      }
+      
+      const drug = findDrug(drugName);
+      
+      if (!drug) {
+        let msg = '未找到药物"' + drugName + '"的肝功能剂量数据\n\n';
+        msg += '可用的药物列表：\n';
+        const drugNames = Object.values(DRUG_DB).filter(d => d.name).map(d => d.name + '(' + (d.name_cn || d.name) + ')');
+        msg += drugNames.slice(0, 15).join('、') + '\n\n';
+        msg += '建议：请参考药品说明书或咨询医生';
+        showResult(msg, 'error');
+        return;
+      }
+      
+      const gradeInfo = {
+        'A': { name: '轻度损害', score: '5-6分' },
+        'B': { name: '中度损害', score: '7-9分' },
+        'C': { name: '重度损害', score: '10-15分' }
+      }[grade];
+      
+      const rec = drug['child_pugh_' + grade.toLowerCase()];
+      const adjNote = rec.adjustment_needed ? '需调整' : '无需调整';
+      const warning = grade === 'C' && rec.recommendation.includes('禁用') 
+        ? '\n⚠️ 警告：Child-Pugh C级患者禁用此药物\n' 
+        : '';
+      
+      let result = '═══════════════════════════════════════════\n';
+      result += '     肝病用药剂量调整建议\n';
+      result += '═══════════════════════════════════════════\n\n';
+      result += '【药物】' + drug.name + ' (' + drug.name_cn + ')\n';
+      result += '【类别】' + drug.category + '\n';
+      result += '【Child-Pugh分级】' + grade + '级（' + gradeInfo.name + '，' + gradeInfo.score + '）\n\n';
+      result += '【常规剂量】' + drug.dosage_normal + '\n';
+      result += '【建议剂量】' + rec.recommendation + '\n';
+      result += '【调整依据】' + rec.note + '\n\n';
+      result += '【临床注意事项】\n' + drug.clinical_notes + '\n\n';
+      result += '【处方调整参考】\n';
+      result += '原处方：' + drug.name + ' ' + drug.dosage_normal + '\n';
+      result += '建议调整：' + adjNote + '\n';
+      result += warning;
+      result += '\n──────────────────��──────────────\n';
+      result += '📌 免责声明：建议仅供参考，\n';
+      result += '最终用药决策需由临床医生确定。\n\n';
+      result += '【数据来源】' + drug.reference;
+      
+      const resultType = (grade === 'C' && rec.recommendation.includes('禁用')) ? 'warning' : 'success';
+      showResult(result, resultType);
+    }
+  </script>
+</body>
+</html>

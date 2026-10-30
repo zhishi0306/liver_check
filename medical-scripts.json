@@ -1,0 +1,11 @@
+{
+  "name": "@pi-med/scripts",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "eval": "node --import tsx scripts/run-medical-eval.ts"
+  },
+  "dependencies": {
+    "tsx": "^4.22.0"
+  }
+}

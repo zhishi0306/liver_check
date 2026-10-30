@@ -1,0 +1,57 @@
+{
+  "drugbank": {
+    "api_base": "https://api.drugbank.com/v1",
+    "max_drugs_per_request": 15,
+    "default_min_severity": "moderate",
+    "timeout_ms": 10000
+  },
+  "patient_constraints": {
+    "age_threshold_elderly": 75,
+    "age_threshold_pediatric": 18,
+    "egfr_threshold_severe": 30,
+    "egfr_threshold_moderate": 60,
+    "filter_rules": {
+      "egfr_lt_30": [
+        "exclude_renal_clearance_high",
+        "adjust_dosage_renal_medium"
+      ],
+      "age_gt_75": [
+        "avoid_anticoagulants",
+        "reduce_dosage"
+      ],
+      "child_pugh_c": [
+        "exclude_hepatic_metabolism_extensive"
+      ],
+      "pregnancy": [
+        "exclude_pregnancy_contraindicated"
+      ]
+    }
+  },
+  "report": {
+    "always_include_disclaimer": true,
+    "disclaimer_text": "建议仅供参考，需医生最终确认",
+    "require_evidence_level": true,
+    "show_confidence": true
+  },
+  "safety": {
+    "require_confirmation_for_major": true,
+    "block_self_medication_advice": true,
+    "alert_high_risk_patterns": true
+  },
+  "tools": {
+    "enable_interaction_check": true,
+    "enable_alternatives": true,
+    "enable_patient_filter": true,
+    "enable_audit": true
+  },
+  "logging": {
+    "log_drugbank_calls": true,
+    "log_audit_results": true,
+    "log_patient_data": false
+  },
+  "features": {
+    "support_chinese": true,
+    "support_alias_lookup": true,
+    "enable_hallucination_detection": true
+  }
+}

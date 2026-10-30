@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>肝病用药智能决策Agent系统</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { color: #ffd700; text-align: center; margin-bottom: 8px; font-size: 26px; }
+    .subtitle { color: #888; text-align: center; margin-bottom: 20px; font-size: 14px; }
+    .card {
+      background: #1e1e3f;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+      border: 1px solid #333;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .section-title {
+      color: #00d4ff;
+      font-size: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #333;
+    }
+    .form-row { display: flex; gap: 12px; margin-bottom: 12px; }
+    .form-group { flex: 1; }
+    label { display: block; margin-bottom: 6px; color: #aaa; font-size: 13px; }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      font-size: 15px;
+      background: #252545;
+      color: #fff;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #00d4ff;
+    }
+    .btn {
+      background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 600;
+      transition: transform 0.1s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .result {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      font-family: 'Consolas', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      display: none;
+      background: #1a1a2e;
+      border: 1px solid #444;
+      color: #fff;
+    }
+    .result.show { display: block; }
+    .result.success { border-color: #00d400; }
+    .result.error { border-color: #ff4444; }
+    .rank-a { color: #ff6b6b; font-weight: bold; }
+    .rank-b { color: #ffd93d; font-weight: bold; }
+    .rank-c { color: #ffe066; }
+    .rank-d { color: #a8e6cf; }
+    .rank-e { color: #51cf66; }
+    .examples { display: flex; flex-wrap: wrap; gap: 8px; }
+    .example-btn {
+      background: #333;
+      color: #ccc;
+      border: 1px solid #444;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .example-btn:hover { background: #444; }
+    .info { color: #666; font-size: 12px; margin-top: 12px; text-align: center; }
+    .tab-buttons { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab-btn {
+      flex: 1;
+      background: #252545;
+      color: #888;
+      border: 1px solid #444;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .tab-btn.active { background: #00d4ff; color: #000; border-color: #00d4ff; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* API Key 提示条（未配置时才显示） */
+    .keybar {
+      max-width: 900px;
+      margin: 0 auto 14px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.7;
+      background: rgba(255, 200, 0, 0.12);
+      border: 1px solid rgba(255, 200, 0, 0.45);
+      color: #ffd700;
+      display: none;
+    }
+    .keybar.show { display: block; }
+    .keybar a { color: #00d4ff; text-decoration: underline; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧬 肝病用药智能决策Agent</h1>
+    <p class="subtitle">基于LiverTox + Child-Pugh剂量调整</p>
+
+    <!-- 未配置 API Key 时显示 -->
+    <div id="keybar" class="keybar"></div>
+    
+    <!-- Tab导航 -->
+    <div class="tab-buttons">
+      <div class="tab-btn active" onclick="switchTab('check')">🔍 肝毒性检查</div>
+      <div class="tab-btn" onclick="switchTab('cp')">📊 Child-Pugh评分</div>
+      <div class="tab-btn" onclick="switchTab('drug')">💊 肝病药物</div>
+    </div>
+    
+    <!-- Tab 1: 肝毒性检查 -->
+    <div id="tab-check" class="card tab-content active">
+      <div class="section-title">🔍 药物肝毒性评估</div>
+      <div class="form-group">
+        <label>药物名称（英文）</label>
+        <input type="text" id="drugName" placeholder="例如：Acetaminophen, Isoniazid, Entecavir">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>当前剂量 (mg/天)</label>
+          <input type="number" id="dailyDose" placeholder="如：4000">
+        </div>
+        <div class="form-group">
+          <label>Child-Pugh评分 (5-15)</label>
+          <input type="number" id="cpScore" placeholder="如：8" min="5" max="15">
+        </div>
+      </div>
+      <button class="btn" onclick="checkHepatotoxicity()">开始评估</button>
+      <div id="result-check" class="result"></div>
+      
+      <div class="examples">
+        <button class="example-btn" onclick="fillEx('Acetaminophen',4000,8)">对乙酰氨基酚+肝硬化</button>
+        <button class="example-btn" onclick="fillEx('Entecavir',0.5,5)">恩替卡韦</button>
+        <button class="example-btn" onclick="fillEx('Rifampicin',600,12)">利福平+C级</button>
+      </div>
+    </div>
+    
+    <!-- Tab 2: Child-Pugh评分 -->
+    <div id="tab-cp" class="card tab-content">
+      <div class="section-title">📊 Child-Pugh评分计算</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>血清胆红素 (μmol/L)</label>
+          <input type="number" id="bilirubin" placeholder="正常<34, 中度34-51, 重度>51" value="30">
+        </div>
+        <div class="form-group">
+          <label>血清白蛋白 (g/L)</label>
+          <input type="number" id="albumin" placeholder="正常>35, 中度28-35, 重度<28" value="38">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>凝血酶时间延长 (秒)</label>
+          <input type="number" id="pt" placeholder="正常<4, 中度4-6, 重度>6" value="2">
+        </div>
+        <div class="form-group">
+          <label>腹水</label>
+          <select id="ascites">
+            <option value="none">无</option>
+            <option value="mild">轻度</option>
+            <option value="moderate">中重度</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>肝性脑病</label>
+        <select id="encephalopathy">
+          <option value="none">无</option>
+          <option value="grade1_2">1-2级</option>
+          <option value="grade3_4">3-4级</option>
+        </select>
+      </div>
+      <button class="btn" onclick="calculateChildPugh()">计算Child-Pugh分级</button>
+      <div id="result-cp" class="result"></div>
+    </div>
+    
+    <!-- Tab 3: 肝病药物 -->
+    <div id="tab-drug" class="card tab-content">
+      <div class="section-title">💊 肝病治疗药物查询</div>
+      <div class="form-group">
+        <label>治疗用途</label>
+        <select id="indication">
+          <option value="">-- 选择 --</option>
+          <option value="chronic_hepatitis_b">慢性乙肝</option>
+          <option value="chronic_hepatitis_c">慢性丙肝</option>
+          <option value="liver_protection">保肝护肝</option>
+          <option value="cirrhosis">肝硬化</option>
+          <option value="cholestasis">胆汁淤积</option>
+          <option value="fatty_liver">脂肪肝</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Child-Pugh分级</label>
+        <select id="targetGrade">
+          <option value="">不指定</option>
+          <option value="A">A级（轻度）</option>
+          <option value="B">B级（中度）</option>
+          <option value="C">C级（重度）</option>
+        </select>
+      </div>
+      <button class="btn" onclick="recommendDrugs()">查询推荐药物</button>
+      <div id="result-drug" class="result"></div>
+    </div>
+    
+    <p class="info">Powered by DeepSeek V4 Pro | 仅供参考，请遵医嘱 | <a href="javascript:void(0)" onclick="setApiKey()" style="color:#00d4ff">设置 / 更换 API Key</a></p>
+  </div>
+
+  <script>
+    // ============ DeepSeek API 配置 ============
+    // 本文件不内置任何 API Key。首次使用时页面顶部会提示，
+    // 点「设置 API Key」填入自己的 Key 即可：
+    //   - 只保存在本机浏览器的 localStorage，不会上传到任何服务器
+    //   - 申请地址：https://platform.deepseek.com/api_keys
+    const API_KEY_STORAGE = 'livercheck_deepseek_api_key';
+    const MODEL = 'deepseek-v4-pro';
+
+    // localStorage 不可用时（极端隐私设置）退回内存变量
+    let MEMORY_KEY = '';
+
+    function getApiKey() {
+      try {
+        return (localStorage.getItem(API_KEY_STORAGE) || '').trim() || MEMORY_KEY;
+      } catch (e) {
+        return MEMORY_KEY;
+      }
+    }
+
+    function saveApiKey(key) {
+      MEMORY_KEY = key;
+      try {
+        if (key) localStorage.setItem(API_KEY_STORAGE, key);
+        else localStorage.removeItem(API_KEY_STORAGE);
+      } catch (e) {
+        /* ignore */
+      }
+    }
+
+    function setApiKey() {
+      const tip = '请输入你的 DeepSeek API Key\n\n' +
+        '· 只保存在本机浏览器，不会上传\n' +
+        '· 申请地址：https://platform.deepseek.com/api_keys\n\n' +
+        '留空并点“确定” = 清除已保存的 Key';
+      const input = window.prompt(tip, getApiKey());
+      if (input === null) return; // 取消
+      saveApiKey(input.trim());
+      renderKeybar();
+    }
+
+    function renderKeybar() {
+      const bar = document.getElementById('keybar');
+      if (!bar) return;
+      if (getApiKey()) {
+        bar.className = 'keybar';
+        bar.innerHTML = '';
+        return;
+      }
+      bar.className = 'keybar show';
+      bar.innerHTML =
+        '⚠️ 还没配置 DeepSeek API Key，三个查询功能都会失败。' +
+        '点 <a onclick="setApiKey()">这里填入你自己的 Key</a>' +
+        '（只保存在本机浏览器，不会上传）。' +
+        '申请地址：<a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">platform.deepseek.com/api_keys</a>';
+    }
+    
+    
+    async function callDeepSeek(prompt) {
+      const apiKey = getApiKey();
+      if (!apiKey) {
+        renderKeybar();
+        return '⚠️ 未配置 DeepSeek API Key\n\n请点页面顶部提示条里的「这里」，或页脚「设置 / 更换 API Key」，填入你自己的 Key 后再查询。\n\n申请地址：https://platform.deepseek.com/api_keys';
+      }
+
+      const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + apiKey
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.7
+        })
+      });
+      const data = await response.json();
+      return data.choices?.[0]?.message?.content || 'Error: ' + JSON.stringify(data);
+    }
+
+    // 本地知识库（备用）
+    const DRUG_DB = {
+      'acetaminophen': { name_zh: '对乙酰氨基酚', rank: 'A', pattern: '急性肝细胞损伤', mgmt: 'N-乙酰半胱氨酸解毒' },
+      'isoniazid': { name_zh: '异烟肼', rank: 'A', pattern: '急性肝细胞损伤', mgmt: '立即停药，NAC治疗' },
+      'rifampicin': { name_zh: '利福平', rank: 'A', pattern: '急性肝细胞损伤/胆汁淤积', mgmt: '监测肝功能' },
+      'methotrexate': { name_zh: '甲氨蝶呤', rank: 'A', pattern: '慢性肝纤维化', mgmt: '长期监测' },
+      'valproic_acid': { name_zh: '丙戊酸', rank: 'A', pattern: '急性肝细胞损伤', mgmt: '监测血药浓度' },
+      ' phenytoin': { name_zh: '苯妥英', rank: 'A', pattern: '急性肝细胞损伤', mgmt: '监测血药浓度' },
+      'tamoxifen': { name_zh: '他莫昔芬', rank: 'B', pattern: '脂肪肝', mgmt: '定期监测' },
+      'amiodarone': { name_zh: '胺碘酮', rank: 'B', pattern: '慢性肝损伤', mgmt: '长期监测' },
+      'azathioprine': { name_zh: '硫唑嘌呤', rank: 'C', pattern: '肝酶升高', mgmt: '监测TPMT' },
+      'enecvir': { name_zh: '恩替卡韦', rank: 'B', pattern: '肝酶升高（罕见）', mgmt: '抗HBV一线' },
+      'tenofovir': { name_zh: '替诺福韦', rank: 'B', pattern: '肾毒性>肝毒性', mgmt: '监肾功能和骨密度' },
+      'silymarin': { name_zh: '水飞蓟素', rank: 'E', pattern: '保肝辅助', mgmt: '安全性良好' },
+      'ursodeoxycholic_acid': { name_zh: '熊去氧胆酸', rank: 'E', pattern: '原发性胆汁性胆管炎', mgmt: '一线治疗' },
+      'lamivudine': { name_zh: '拉米夫定', rank: 'B', pattern: '肝酶升高', mgmt: '监测' },
+      'adefovir': { name_zh: '阿德福韦', rank: 'B', pattern: '肾毒性', mgmt: '监测肾功能' }
+    };
+    
+    const LIVER_DRUGS = {
+      'chronic_hepatitis_b': ['恩替卡韦(Entecavir)', '替诺福韦(Tenofovir)', '拉米夫定(Lamivudine)'],
+      'chronic_hepatitis_c': ['索磷布韦(Sofosbuvir)', '吉三代(Epclusa)'],
+      'liver_protection': ['水飞蓟素(Silymarin)', '双环醇(Bicyclol)', '还原型谷胱甘肽'],
+      'cirrhosis': ['水飞蓟素', '熊去氧胆酸', '腺苷蛋氨酸'],
+      'cholestasis': ['熊去氧胆酸', '腺苷蛋氨酸', '思美泰'],
+      'fatty_liver': ['二甲双胍', '维生素E', '水飞蓟素']
+    };
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('tab-' + tab).classList.add('active');
+    }
+
+    function fillEx(drug, dose, cp) {
+      document.getElementById('drugName').value = drug;
+      document.getElementById('dailyDose').value = dose;
+      document.getElementById('cpScore').value = cp;
+    }
+
+    function show(elId, msg, type) {
+      const el = document.getElementById(elId);
+      el.textContent = msg;
+      el.className = 'result show ' + type;
+    }
+
+    function getRankClass(rank) {
+      return 'rank-' + rank.toLowerCase();
+    }
+
+    function getRankText(rank) {
+      const map = { 'A': '高概率(>50%)', 'B': '可能(10-50%)', 'C': '疑似(1-10%)', 'D': '罕见(<1%)', 'E': '无报告' };
+      return map[rank] || '未知';
+    }
+
+    function calcChildPughScore(bili, alb, pt, asc, enc) {
+      let score = 0;
+      score += bili < 34 ? 1 : bili <= 51 ? 2 : 3;
+      score += alb > 35 ? 1 : alb >= 28 ? 2 : 3;
+      score += pt < 4 ? 1 : pt <= 6 ? 2 : 3;
+      score += asc === 'none' ? 1 : asc === 'mild' ? 2 : 3;
+      score += enc === 'none' ? 1 : enc.includes('grade1_2') ? 2 : 3;
+      return Math.max(score, 5); // 最低5分
+    }
+
+    function getGradeInfo(score) {
+      if (score <= 6) return { grade: 'A', name: '轻度', dose: '正常剂量' };
+      if (score <= 9) return { grade: 'B', name: '中度', dose: '减量50%' };
+      return { grade: 'C', name: '重度', dose: '禁用' };
+    }
+
+    function adjustDose(normalDose, grade) {
+      if (grade === 'A') return normalDose;
+      if (grade === 'B') return Math.round(normalDose * 0.5);
+      return '禁用';
+    }
+
+    // ============ 肝毒性检查 ============
+    async function checkHepatotoxicity() {
+      const drug = document.getElementById('drugName').value.trim();
+      const dose = parseInt(document.getElementById('dailyDose').value) || 0;
+      const cpScore = parseInt(document.getElementById('cpScore').value) || 0;
+      
+      if (!drug) {
+        show('result-check', '请输入药物名称', 'error');
+        return;
+      }
+      
+      show('result-check', '正在查询...', 'success');
+      
+      let prompt = `你是一个肝病用药评估专家。请根据LiverTox数据库评估以下药物的肝毒性：
+
+药物：${drug}
+${dose > 0 ? '每日剂量：' + dose + 'mg' : ''}
+${cpScore > 0 ? 'Child-Pugh评分：' + cpScore + '分' : ''}
+
+请用中文回复，包含：
+1. 肝毒性等级（A-E级）
+2. 临床表型
+3. 管理建议
+4. 如有Child-Pugh评分，给出剂量调整建议`;
+
+      const result = await callDeepSeek(prompt);
+      show('result-check', result, 'success');
+    }
+
+    // ============ Child-Pugh评分 ============
+    async function calculateChildPugh() {
+      const bili = parseFloat(document.getElementById('bilirubin').value) || 30;
+      const alb = parseFloat(document.getElementById('albumin').value) || 38;
+      const pt = parseFloat(document.getElementById('pt').value) || 2;
+      const asc = document.getElementById('ascites').value;
+      const enc = document.getElementById('encephalopathy').value;
+      
+      show('result-cp', '正在计算...', 'success');
+      
+      let prompt = `你是一个肝病评分专家。请计算Child-Pugh评分：
+
+血清胆红素：${bili} μmol/L
+血清白蛋白：${alb} g/L
+凝血酶时间延长：${pt} 秒
+腹水：${asc}
+肝性脑病：${enc}
+
+请计算总评分和分级（A/B/C），并给出用药建议。`;
+
+      const result = await callDeepSeek(prompt);
+      show('result-cp', result, 'success');
+    }
+
+    // ============ 肝病药物推荐 ============
+    async function recommendDrugs() {
+      const ind = document.getElementById('indication').value;
+      const grade = document.getElementById('targetGrade').value;
+      
+      if (!ind) {
+        show('result-drug', '请选择治疗用途', 'error');
+        return;
+      }
+      
+      show('result-drug', '正在查询...', 'success');
+      
+      let prompt = `你是一个肝病用药专家。请推荐肝病治疗药物：
+
+治疗用途：${ind}
+${grade ? 'Child-Pugh分级：' + grade + '级' : ''}
+
+请用中文回复，列出推荐药物及简要说明。`;
+
+      const result = await callDeepSeek(prompt);
+      show('result-drug', result, 'success');
+    }
+
+    // 页面加载时检查一次 Key 配置（没配就在顶部亮提示条）
+    document.addEventListener('DOMContentLoaded', renderKeybar);
+    renderKeybar();
+  </script>
+</body>
+</html>

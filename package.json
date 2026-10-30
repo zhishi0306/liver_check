@@ -1,0 +1,40 @@
+{
+	"name": "liver-check",
+	"private": true,
+	"type": "module",
+	"description": "肝病用药智能决策 Agent - GUI + CLI, based on pi coding-agent",
+	"workspaces": [
+		"packages/*",
+		"packages/coding-agent/examples/extensions/with-deps",
+		"packages/coding-agent/examples/extensions/custom-provider-anthropic",
+		"packages/coding-agent/examples/extensions/custom-provider-gitlab-duo",
+		"packages/coding-agent/examples/extensions/sandbox"
+	],
+	"scripts": {
+		"clean": "npm run clean --workspaces",
+		"build": "cd packages/tui && npm run build && cd ../ai && npm run build && cd ../agent && npm run build && cd ../coding-agent && npm run build",
+		"build:medical": "cd packages/medical-tools && npm run build",
+		"build:hepatic": "cd packages/hepatic-tools && npm run build",
+		"eval:medical": "node --import tsx scripts/run-medical-eval.ts",
+		"test": "npm run test --workspaces --if-present"
+	},
+	"devDependencies": {
+		"@types/node": "22.19.19",
+		"@typescript/native-preview": "7.0.0-dev.20260120.1",
+		"esbuild": "0.28.0",
+		"jiti": "2.7.0",
+		"shx": "0.4.0",
+		"tsx": "4.22.1",
+		"typescript": "5.9.3"
+	},
+	"engines": {
+		"node": ">=22.19.0"
+	},
+	"version": "0.1.0",
+	"overrides": {
+		"rimraf": "6.1.2",
+		"gaxios": {
+			"rimraf": "6.1.2"
+		}
+	}
+}
