@@ -1,8 +1,28 @@
 export * from "./agent.ts";
 export * from "./agent-loop.ts";
 export * from "./harness/agent-harness.ts";
-export { type BranchPreparation, type BranchSummaryDetails, type CollectEntriesResult, collectEntriesForBranchSummary, generateBranchSummary, prepareBranchEntries, } from "./harness/compaction/branch-summarization.ts";
-export { calculateContextTokens, compact, DEFAULT_COMPACTION_SETTINGS, estimateContextTokens, estimateTokens, findCutPoint, findTurnStartIndex, generateSummary, getLastAssistantUsage, prepareCompaction, serializeConversation, shouldCompact, } from "./harness/compaction/compaction.ts";
+export {
+	type BranchPreparation,
+	type BranchSummaryDetails,
+	type CollectEntriesResult,
+	collectEntriesForBranchSummary,
+	generateBranchSummary,
+	prepareBranchEntries,
+} from "./harness/compaction/branch-summarization.ts";
+export {
+	calculateContextTokens,
+	compact,
+	DEFAULT_COMPACTION_SETTINGS,
+	estimateContextTokens,
+	estimateTokens,
+	findCutPoint,
+	findTurnStartIndex,
+	generateSummary,
+	getLastAssistantUsage,
+	prepareCompaction,
+	serializeConversation,
+	shouldCompact,
+} from "./harness/compaction/compaction.ts";
 export * from "./harness/messages.ts";
 export * from "./harness/prompt-templates.ts";
 export * from "./harness/session/jsonl-repo.ts";

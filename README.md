@@ -4,9 +4,9 @@
 
 | 功能 | 说明 |
 |---|---|
-| 🔍 药物肝毒性评估 | 按 LiverTox 分级（A–E）给出肝毒性等级、临床表型与管理建议，并结合 Child-Pugh 评分给出剂量调整 |
-| 📊 Child-Pugh 评分 | 由胆红素、白蛋白、凝血酶原时间延长、腹水、肝性脑病五项算出 5–15 分与 A/B/C 分级，并映射到减量/禁用建议 |
-| 💊 肝病药物推荐 | 按适应证（慢乙肝、慢丙肝、保肝、肝硬化、胆汁淤积、脂肪肝）与分级推荐药物 |
+| 药物肝毒性评估 | 按 LiverTox 分级（A–E）给出肝毒性等级、临床表型与管理建议，并结合 Child-Pugh 评分给出剂量调整 |
+| Child-Pugh 评分 | 由胆红素、白蛋白、凝血酶原时间延长、腹水、肝性脑病五项算出 5–15 分与 A/B/C 分级，并映射到减量/禁用建议 |
+| 肝病药物推荐 | 按适应证（慢乙肝、慢丙肝、保肝、肝硬化、胆汁淤积、脂肪肝）与分级推荐药物 |
 
 同一个启动器 `run-medical-agent.bat` 分流两种使用方式：
 
@@ -159,6 +159,20 @@ node --import tsx scripts/run-medical-eval.ts
 ```
 
 用例分三类：药物相互作用安全检查（`med_safety_benchmark.json`）、肝毒性分级（`hepatic_benchmark.json`）、肝病剂量调整（`hepatic_dose_benchmark.json`）。
+
+---
+
+## 开发
+
+```bash
+npm ci
+npm run build        # 构建 tui → ai → agent → coding-agent
+npx biome check .    # 静态检查
+npx biome check --write .   # 自动修
+pip install pre-commit && pre-commit install   # 可选：提交前自动检查
+```
+
+`.github/workflows/ci.yml` 在每次推送时跑两遍：一遍 biome 检查，一遍 `npm ci` + `npm run build` + CLI 冒烟测试。
 
 ---
 
